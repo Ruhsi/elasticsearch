@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: "http://localhost:9200/company",
+  url: "http://localhost:9200/customer",
   log: "trace"
 };
 

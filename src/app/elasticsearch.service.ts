@@ -48,7 +48,7 @@ export class ElasticsearchService {
           "aggs": {
             "group_by_state": {
               "terms": {
-                "field": field + ".keyword"
+                "field": field
               },
               "aggs": {
                 "tops": {

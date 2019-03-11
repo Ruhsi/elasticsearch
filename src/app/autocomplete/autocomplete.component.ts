@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Employee} from "../modals/employee";
-import {EmployeeGroup} from "../modals/employeeGroup";
+import {Customer} from "../modals/customer";
+import {CustomerGroup} from "../modals/customerGroup";
 
 
 @Component({
@@ -12,8 +12,10 @@ import {EmployeeGroup} from "../modals/employeeGroup";
 export class AutocompleteComponent implements OnInit {
 
   myControl = new FormControl();
-  @Input() options: EmployeeGroup[];
+  @Input() customers: CustomerGroup[];
   @Output() keyupEvent: EventEmitter<string> = new EventEmitter<string>(false);
+
+  selectedCustomer: Customer;
 
   ngOnInit() {
 
@@ -21,6 +23,11 @@ export class AutocompleteComponent implements OnInit {
 
   get(value: string){
     this.keyupEvent.emit(value);
+  }
+
+  selectCustomer(customer: Customer){
+    this.selectedCustomer = customer;
+    console.log(customer);
   }
 
 }

@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ElasticsearchService} from "../elasticsearch.service";
-import {Employee} from "../modals/employee";
-import {EmployeeGroup} from "../modals/employeeGroup";
+import {Customer} from "../modals/customer";
+import {CustomerGroup} from "../modals/customerGroup";
 import {Configuration} from "../configuration/configuration";
 
 
@@ -15,7 +15,7 @@ export class TestEsComponent implements OnInit {
   isConnected = false;
   status: string;
 
-  employeeGroups: EmployeeGroup[] = [];
+  customerGroups: CustomerGroup[] = [];
   field = Configuration.queryField;
 
   constructor(private es: ElasticsearchService, private cd: ChangeDetectorRef) {
@@ -39,20 +39,22 @@ export class TestEsComponent implements OnInit {
     this.es.aggregateByField(field, query)
       .then(
         response => {
-          this.employeeGroups = [];
+          console.log(response);
+          this.customerGroups = [];
           response.aggregations.group_by_state.buckets.forEach(
             keyValue => {
-              let empGroup = new EmployeeGroup();
-              empGroup.group = keyValue.key;
-              empGroup.employees = [];
+              let custGroup = new CustomerGroup();
+              custGroup.group = keyValue.key;
+              custGroup.customers = [];
               keyValue.tops.hits.hits.forEach(
-                employee => {
-                  empGroup.employees.push(
-                   new Employee(employee._source.firstname, employee._source.lastname, employee._source.zipcode)
+                customer => {
+                  let custSource = customer._source as Customer;
+                  custGroup.customers.push(
+                   new Customer(custSource.customernumber, custSource.first_name, custSource.last_name, custSource.street, custSource.zip, custSource.city, custSource.email)
                   );
                 }
               );
-              this.employeeGroups.push(empGroup);
+              this.customerGroups.push(custGroup);
             }
           )
         }

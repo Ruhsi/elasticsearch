@@ -3,11 +3,15 @@
     <input #input type="text" placeholder="any text" aria-label="Number" matInput (keyup)="get(input.value.trim())"
            [formControl]="myControl" [matAutocomplete]="auto">
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-      <mat-optgroup *ngFor="let key of options" [label]="key.group">
-        <mat-option *ngFor="let option of key.employees" [value]="option.firstname + ' ' + option.lastname">
-          {{option.firstname + " " + option.lastname}}
+      <mat-optgroup *ngFor="let key of customers" [label]="key.group">
+        <mat-option *ngFor="let option of key.customers" (onSelectionChange)="selectCustomer(option)" [value]="option.first_name + ' ' + option.last_name">
+          {{option.first_name + " " + option.last_name}}
         </mat-option>
       </mat-optgroup>
     </mat-autocomplete>
   </mat-form-field>
 </form>
+
+<div class="customer">
+  <app-display-customer [customer]="selectedCustomer"></app-display-customer>
+</div>

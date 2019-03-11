@@ -14,12 +14,15 @@ import {
   MatRippleModule
 } from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { DisplayCustomerComponent } from './display-customer/display-customer.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestEsComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    DisplayCustomerComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,3 @@
 export const Configuration =  {
-  queryField: "zipcode"
+  queryField: "zip"
 };
