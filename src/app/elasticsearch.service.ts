@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Client} from 'elasticsearch-browser';
+import {environment} from "../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class ElasticsearchService {
 
   private connect() {
     this.client = new Client({
-      host: "http://localhost:9200",
-      log: "trace"
+      host: environment.url,
+      log: environment.log
     });
   }
 
@@ -28,29 +29,38 @@ export class ElasticsearchService {
     });
   }
 
-  get(value: string) {
-    console.log("service:" + value);
+  aggregateByField(field: string, query: string) {
     return this.client.search({
-      body: {
-        "query": {
-          "bool": {
-            "should": [
-              {
-                "query_string": {
-                  "default_field": "firstname",
-                  "query": "*" + value + "*"
+        body: {
+          "size": 0,
+          "query": {
+            "bool": {
+              "should": [
+                {
+                  "query_string": {
+                    "default_field": "*",
+                    "query": "*" + query + "*"
+                  }
                 }
+              ]
+            }
+          },
+          "aggs": {
+            "group_by_state": {
+              "terms": {
+                "field": field + ".keyword"
               },
-              {
-                "query_string": {
-                  "default_field": "lastname",
-                  "query": "*" + value + "*"
+              "aggs": {
+                "tops": {
+                  "top_hits": {
+                    "size": 10
+                  }
                 }
               }
-            ]
+            }
           }
         }
       }
-    })
+    )
   }
 }
