@@ -16,6 +16,7 @@ import {
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { DisplayCustomerComponent } from './display-customer/display-customer.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     MatInputModule,
     MatRippleModule,
     BrowserAnimationsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
